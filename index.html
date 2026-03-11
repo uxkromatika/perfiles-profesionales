@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mis Perfiles Profesionales · kromatika</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #C2185B;
+    --pink-light: #FCE4EC;
+    --pink-mid: #e91e8c22;
+    --dark: #1a0a10;
+    --gray: #6b5b62;
+    --light: #fdf6f9;
+    --border: #e8d5dc;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--dark);
+    padding: 2rem 2.5rem 1.5rem;
+    border-bottom: 3px solid var(--pink);
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+
+  header h1 span { color: var(--pink); font-style: italic; }
+
+  header p {
+    font-size: 0.82rem;
+    color: #a08090;
+    margin-top: 0.3rem;
+    font-weight: 300;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ADD FORM */
+  .add-section {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 12px #c2185b0a;
+  }
+
+  .add-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--pink);
+    margin-bottom: 1rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .form-row.full { grid-template-columns: 1fr; }
+
+  input, select, textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.6rem 0.85rem;
+    color: var(--dark);
+    background: var(--light);
+    width: 100%;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--pink);
+    background: #fff;
+  }
+
+  textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+  .btn-add {
+    background: var(--pink);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-add:hover { background: #a01550; transform: translateY(-1px); }
+  .btn-add:active { transform: translateY(0); }
+
+  /* FILTER BAR */
+  .filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    align-items: center;
+  }
+
+  .filter-label {
+    font-size: 0.78rem;
+    color: var(--gray);
+    font-weight: 500;
+    margin-right: 0.25rem;
+  }
+
+  .chip {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .chip:hover, .chip.active {
+    background: var(--pink);
+    border-color: var(--pink);
+    color: #fff;
+  }
+
+  /* COUNT */
+  .count {
+    font-size: 0.78rem;
+    color: var(--gray);
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+
+  /* CARDS */
+  .cards { display: flex; flex-direction: column; gap: 1rem; }
+
+  .card {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem 1.5rem;
+    box-shadow: 0 2px 10px #c2185b07;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card:hover {
+    border-color: #e8a0bb;
+    box-shadow: 0 4px 20px #c2185b12;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-meta { display: flex; flex-direction: column; gap: 0.2rem; }
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--dark);
+    line-height: 1.3;
+  }
+
+  .card-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.3rem; }
+
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .tag-plataforma { background: #fce4ec; color: #c2185b; }
+  .tag-tipo       { background: #e3f2fd; color: #1565c0; }
+  .tag-fecha      { background: #f3e5f5; color: #6a1b9a; }
+
+  .card-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+  .btn-icon {
+    background: var(--light);
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 0.9rem;
+  }
+
+  .btn-icon:hover { background: var(--pink); border-color: var(--pink); }
+  .btn-icon:hover svg { stroke: #fff; }
+
+  .btn-icon svg { stroke: var(--gray); transition: stroke 0.15s; }
+
+  .card-text {
+    font-size: 0.87rem;
+    color: var(--gray);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .card-date {
+    font-size: 0.73rem;
+    color: #c0a8b0;
+    margin-top: 0.85rem;
+    font-weight: 300;
+  }
+
+  /* EMPTY */
+  .empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--gray);
+  }
+
+  .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.4; }
+  .empty p { font-size: 0.88rem; font-weight: 300; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    background: var(--dark);
+    color: #fff;
+    padding: 0.6rem 1.4rem;
+    border-radius: 20px;
+    font-size: 0.83rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    z-index: 100;
+    white-space: nowrap;
+  }
+
+  .toast.show { opacity: 1; }
+
+  /* CHAR COUNT */
+  .char-count {
+    font-size: 0.73rem;
+    color: var(--gray);
+    text-align: right;
+    margin-top: 0.25rem;
+  }
+
+  .char-count.warn { color: var(--pink); }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    header { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Mis Perfiles <span>Profesionales</span></h1>
+  <p>kromatika · repositorio de versiones para postulaciones</p>
+</header>
+
+<div class="container">
+
+  <!-- FORMULARIO -->
+  <div class="add-section">
+    <h2>+ Agregar versión</h2>
+    <div class="form-row">
+      <div>
+        <input type="text" id="inp-nombre" placeholder="Nombre (ej: BH Studios — Gráfica híbrida)" maxlength="80">
+      </div>
+      <div>
+        <select id="inp-plataforma">
+          <option value="">Plataforma...</option>
+          <option>Getonboard</option>
+          <option>LinkedIn</option>
+          <option>Bumeran</option>
+          <option>Indeed</option>
+          <option>Portfolio / Web</option>
+          <option>Correo directo</option>
+          <option>Otro</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <select id="inp-tipo">
+          <option value="">Tipo de perfil...</option>
+          <option>Gráfica + UX híbrido</option>
+          <option>UX/UI enfocado</option>
+          <option>Diseño gráfico puro</option>
+          <option>Accesibilidad digital</option>
+          <option>General / Servicios</option>
+          <option>LinkedIn principal</option>
+        </select>
+      </div>
+      <div>
+        <input type="text" id="inp-empresa" placeholder="Empresa / cargo (opcional)">
+      </div>
+    </div>
+    <div class="form-row full">
+      <div>
+        <textarea id="inp-texto" placeholder="Pega aquí tu perfil profesional..."></textarea>
+        <div class="char-count" id="char-count">0 caracteres</div>
+      </div>
+    </div>
+    <button class="btn-add" onclick="agregarPerfil()">Guardar versión</button>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filter-bar">
+    <span class="filter-label">Filtrar:</span>
+    <span class="chip active" onclick="filtrar(this, 'todos')">Todos</span>
+    <span class="chip" onclick="filtrar(this, 'Gráfica + UX híbrido')">Híbrido</span>
+    <span class="chip" onclick="filtrar(this, 'UX/UI enfocado')">UX/UI</span>
+    <span class="chip" onclick="filtrar(this, 'Diseño gráfico puro')">Gráfica</span>
+    <span class="chip" onclick="filtrar(this, 'LinkedIn principal')">LinkedIn</span>
+  </div>
+
+  <div class="count" id="count"></div>
+  <div class="cards" id="cards"></div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'kromatika_perfiles';
+
+let perfiles = [
+  {
+    id: 1,
+    nombre: "BH Studios — Gráfica híbrida (enviado)",
+    plataforma: "Getonboard",
+    tipo: "Gráfica + UX híbrido",
+    empresa: "BH Studios",
+    texto: `Diseñadora Gráfica titulada con mención en UX/UI. He trabajado en identidad visual, piezas digitales y material corporativo para distintos clientes — desde rediseño de marca completo hasta catálogos, señalética y plantillas para redes sociales.
+
+En mi práctica en BICE Vida diseñé banners para la app, construí componentes UI en el Design System y participé en testeos con usuarios reales. También propuse una plantilla de handoff estándar adoptada por los equipos de UI, Product Design y Desarrollo.
+
+Manejo Adobe Suite (Illustrator, Photoshop, InDesign) y Figma. Conocimientos básicos de edición de video (CapCut, Premiere) y HTML/CSS. Aprendo rápido lo que no sé — YouTube y preguntar al equipo son herramientas válidas.
+
+📌 behance.net/kromatika`,
+    fecha: new Date().toLocaleDateString('es-CL')
+  },
+  {
+    id: 2,
+    nombre: "Perfil UX/UI + Accesibilidad (versión original)",
+    plataforma: "LinkedIn",
+    tipo: "UX/UI enfocado",
+    empresa: "",
+    texto: `Diseñadora gráfica con mención en diseño UX/UI con foco en accesibilidad digital y diseño centrado en las personas.
+
+Cuento con experiencia en proyectos digitales reales —desde prácticas profesionales hasta trabajo freelance activo— combinando diseño visual, investigación de usuarios, diseño de interfaces y criterios WCAG.
+
+Como Product Designer en BICE Vida, participé en el Design System de su app móvil: componentes, QA y handoff a desarrollo, además de entrevistas y testeos con usuarios reales en flujos de Reembolsos y Rentas Vitalicias.
+
+Mi proyecto de título, Epimind, es una app de salud para personas con epilepsia y cuidadores, aplicando investigación de usuarios, diseño de flujos accesibles y prototipado en Figma.
+
+📌 behance.net/kromatika`,
+    fecha: new Date().toLocaleDateString('es-CL')
+  }
+];
+
+let filtroActivo = 'todos';
+
+function guardar() {
+  try {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(perfiles));
+  } catch(e) {}
+}
+
+function cargar() {
+  try {
+    const d = sessionStorage.getItem(STORAGE_KEY);
+    if (d) perfiles = JSON.parse(d);
+  } catch(e) {}
+}
+
+function mostrarToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function agregarPerfil() {
+  const nombre = document.getElementById('inp-nombre').value.trim();
+  const texto  = document.getElementById('inp-texto').value.trim();
+  if (!nombre || !texto) { mostrarToast('Falta el nombre o el texto ✦'); return; }
+
+  const perfil = {
+    id: Date.now(),
+    nombre,
+    plataforma: document.getElementById('inp-plataforma').value,
+    tipo: document.getElementById('inp-tipo').value,
+    empresa: document.getElementById('inp-empresa').value.trim(),
+    texto,
+    fecha: new Date().toLocaleDateString('es-CL')
+  };
+
+  perfiles.unshift(perfil);
+  guardar();
+  renderCards();
+
+  document.getElementById('inp-nombre').value = '';
+  document.getElementById('inp-texto').value = '';
+  document.getElementById('inp-plataforma').value = '';
+  document.getElementById('inp-tipo').value = '';
+  document.getElementById('inp-empresa').value = '';
+  document.getElementById('char-count').textContent = '0 caracteres';
+  mostrarToast('Versión guardada ✦');
+}
+
+function eliminar(id) {
+  if (!confirm('¿Eliminar esta versión?')) return;
+  perfiles = perfiles.filter(p => p.id !== id);
+  guardar();
+  renderCards();
+  mostrarToast('Eliminado');
+}
+
+function copiar(id) {
+  const p = perfiles.find(x => x.id === id);
+  if (!p) return;
+  navigator.clipboard.writeText(p.texto).then(() => mostrarToast('Copiado al portapapeles ✦'));
+}
+
+function filtrar(el, tipo) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  filtroActivo = tipo;
+  renderCards();
+}
+
+function renderCards() {
+  const container = document.getElementById('cards');
+  const countEl   = document.getElementById('count');
+
+  const lista = filtroActivo === 'todos'
+    ? perfiles
+    : perfiles.filter(p => p.tipo === filtroActivo);
+
+  countEl.textContent = `${lista.length} versión${lista.length !== 1 ? 'es' : ''}`;
+
+  if (lista.length === 0) {
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">✦</div>
+        <p>No hay versiones en esta categoría todavía.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = lista.map(p => `
+    <div class="card">
+      <div class="card-header">
+        <div class="card-meta">
+          <div class="card-title">${escHtml(p.nombre)}</div>
+          <div class="card-tags">
+            ${p.plataforma ? `<span class="tag tag-plataforma">${escHtml(p.plataforma)}</span>` : ''}
+            ${p.tipo       ? `<span class="tag tag-tipo">${escHtml(p.tipo)}</span>` : ''}
+            ${p.empresa    ? `<span class="tag tag-fecha">${escHtml(p.empresa)}</span>` : ''}
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-icon" title="Copiar texto" onclick="copiar(${p.id})">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+          </button>
+          <button class="btn-icon" title="Eliminar" onclick="eliminar(${p.id})">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="card-text">${escHtml(p.texto)}</div>
+      <div class="card-date">Guardado el ${escHtml(p.fecha)}</div>
+    </div>
+  `).join('');
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// char counter
+document.getElementById('inp-texto').addEventListener('input', function() {
+  const n = this.value.length;
+  const el = document.getElementById('char-count');
+  el.textContent = `${n} caracteres`;
+  el.classList.toggle('warn', n > 800);
+});
+
+cargar();
+renderCards();
+</script>
+</body>
+</html>
